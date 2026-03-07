@@ -1,5 +1,5 @@
 Mini SOC Lab – Wazuh SIEM Detection Report
-1. Introduction
+## 1. Introduction
 
 This project demonstrates the creation of a small Security Operations Center (SOC) laboratory environment using Wazuh SIEM, Sysmon, and Windows security logging.
 
@@ -7,21 +7,21 @@ The objective of this lab is to simulate common attacker techniques and develop 
 
 The lab includes:
 
-A Wazuh SIEM server responsible for log ingestion and detection
+-A Wazuh SIEM server responsible for log ingestion and detection
 
-A Windows 10 endpoint acting as the victim machine
+-A Windows 10 endpoint acting as the victim machine
 
-A Kali Linux system used to simulate attacker activity
+-A Kali Linux system used to simulate attacker activity
 
 The environment allows testing detection scenarios such as:
 
-Brute force authentication attempts
+-Brute force authentication attempts
 
-Suspicious PowerShell execution
+-Suspicious PowerShell execution
 
-Network port scanning
+-Network port scanning
 
-2. Lab Architecture
+## 2. Lab Architecture
 
 The laboratory environment consists of three virtual machines connected through a host-only network.
 
@@ -32,7 +32,7 @@ Kali Linux	Attacker machine	192.168.56.103
 
 Logs generated on the Windows endpoint are collected by the Wazuh agent and forwarded to the Wazuh manager, where they are processed and correlated using detection rules.
 
-3. Telemetry Configuration
+## 3. Telemetry Configuration
 
 To ensure sufficient visibility, several logging mechanisms were enabled on the Windows endpoint.
 
@@ -40,38 +40,38 @@ Windows Security Logging
 
 Windows audit policies were configured to log authentication events, including:
 
-successful logons
+-successful logons
 
-failed logon attempts
+-failed logon attempts
 
-These events are essential for detecting brute force attacks.
+-These events are essential for detecting brute force attacks.
 
 Example event ID monitored:
 
-4625 – Failed logon attempt
-PowerShell Logging
+-4625 – Failed logon attempt
+-PowerShell Logging
 
 PowerShell Script Block Logging was enabled to capture executed PowerShell commands.
 
 This allows the detection of suspicious commands such as:
 
-encoded commands
+-encoded commands
 
-remote script execution
+-remote script execution
 
-malicious automation
+-malicious automation
 
 Sysmon Deployment
 
 Sysmon was installed on the Windows endpoint to provide detailed system telemetry including:
 
-process creation
+-process creation
 
-network connections
+-network connections
 
-file modifications
+-file modifications
 
-registry changes
+-registry changes
 
 Important Sysmon event IDs used in this project include:
 
@@ -79,7 +79,8 @@ Event ID	Description
 1	Process creation
 3	Network connection
 11	File creation
-4. Wazuh Agent Deployment
+
+## 4. Wazuh Agent Deployment
 
 A Wazuh agent was installed on the Windows endpoint to collect system logs and forward them to the Wazuh server.
 
@@ -87,24 +88,24 @@ The agent successfully connected to the Wazuh manager and began sending telemetr
 
 This allowed the SIEM to ingest logs from:
 
-Windows Event Logs
+-Windows Event Logs
 
-Sysmon logs
+-Sysmon logs
 
-PowerShell logging
+-PowerShell logging
 
-5. Detection Engineering
+## 5. Detection Engineering
 
 Three detection rules were implemented to identify suspicious activity in the environment.
 
 Detection 1 – Brute Force Attack
 Attack Simulation
 
-Multiple failed login attempts were generated on the Windows endpoint.
+-Multiple failed login attempts were generated on the Windows endpoint.
 
 The Windows security event:
 
-Event ID 4625
+-Event ID 4625
 
 indicates a failed authentication attempt.
 
@@ -114,9 +115,9 @@ A custom Wazuh rule was created to detect multiple failed logon attempts from th
 
 Detection logic:
 
-5 failed logon attempts
-within 60 seconds
-from the same IP address
+-5 failed logon attempts
+-Within 60 seconds
+-From the same IP address
 
 This behaviour is commonly associated with brute force attacks.
 
@@ -133,9 +134,9 @@ Detection Logic
 
 A custom detection rule was created to identify:
 
-encoded PowerShell commands
+-encoded PowerShell commands
 
-suspicious script execution patterns
+-suspicious script execution patterns
 
 This rule uses Sysmon process creation events.
 
@@ -144,7 +145,7 @@ Attack Simulation
 
 The Kali Linux machine executed an Nmap scan against the Windows endpoint:
 
-nmap -sS -p 1-200 192.168.56.102
+nmap -sS -p- 192.168.56.102
 
 This generates multiple connection attempts to different ports.
 
@@ -152,15 +153,15 @@ Detection Logic
 
 Sysmon network connection events were monitored to detect:
 
-multiple connection attempts
+-multiple connection attempts
 
-from the same source IP
+-from the same source IP
 
-within a short time window
+-within a short time window
 
 This behaviour is consistent with reconnaissance activity.
 
-6. Threat Hunting
+## 6. Threat Hunting
 
 The Wazuh dashboard allows analysts to perform threat hunting queries using ingested logs.
 
@@ -174,7 +175,7 @@ data.win.system.eventID:1
 
 These queries help analysts identify suspicious system activity.
 
-7. Conclusion
+## 7. Conclusion
 
 This project demonstrates how a small SOC environment can be built using open-source security tools.
 
@@ -182,15 +183,15 @@ The lab shows how telemetry from Windows systems can be collected, analysed, and
 
 Key skills demonstrated include:
 
-SIEM deployment and configuration
+-SIEM deployment and configuration
 
-endpoint telemetry collection
+-endpoint telemetry collection
 
-detection rule creation
+-detection rule creation
 
-attack simulation
+-attack simulation
 
-threat hunting using SIEM tools
+-threat hunting using SIEM tools
 
 This type of environment provides a valuable platform for learning blue team and SOC analyst techniques.
 
