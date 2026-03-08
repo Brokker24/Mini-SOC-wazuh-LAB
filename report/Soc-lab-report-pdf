@@ -175,6 +175,14 @@ data.win.system.eventID:1
 
 These queries help analysts identify suspicious system activity.
 
+## MITRE ATT&CK Mapping
+
+| Detection | MITRE Technique | Description |
+|------|------|------|
+| Brute Force | T1110 | Credential brute force attempts |
+| PowerShell execution | T1059.001 | Command and scripting interpreter |
+| Port scanning | T1046 | Network service discovery |
+
 ## 7. Conclusion
 
 This project demonstrates how a small SOC environment can be built using open-source security tools.
